@@ -1,3 +1,4 @@
+function home3D () {
 // Global Variables
 var scene, camera, renderer;
 
@@ -241,3 +242,6 @@ function animate(ts) {
 
 init();
 animate();
+}
+
+module.exports = home3D;

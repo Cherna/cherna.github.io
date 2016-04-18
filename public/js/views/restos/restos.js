@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var template = require('../../../views/restos.jade');
+var template = require('./restos.jade');
 
 var restos = function (context, next) {
   $('canvas').hide();

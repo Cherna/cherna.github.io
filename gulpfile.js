@@ -67,7 +67,7 @@ gulp.task('watch', function() {
   gulp.watch('public/styl/**/*.styl', ['styles']);
 
   // Watch .js files
-  gulp.watch('public/js/**/*.js', ['browserify']);
+  gulp.watch(['public/js/**/*.js', 'public/**/*.jade', 'views/**/*.jade'], ['browserify']);
 
   // Watch image files
   // gulp.watch('public/images/*', ['images']);
