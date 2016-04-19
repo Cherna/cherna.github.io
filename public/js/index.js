@@ -12,7 +12,11 @@ $(document).ready(function() {
   page('*', function(context, next) {
     console.log('all routes');
     console.log(pace);
+    $('.main-content').hide();
     pace.start();
+    pace.on('done', function() {
+      $('.main-content').fadeIn(1000);
+    })
     next();
   });
 

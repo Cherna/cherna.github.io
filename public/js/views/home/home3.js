@@ -92,6 +92,15 @@ function init() {
   light.shadowMapHeight = 4096;
   scene.add(light);
 
+  var light2 = new THREE.SpotLight(0xf66240, 1, 0);
+  light2.position.set(-50, 20, 45);
+  // light2.castShadow = true;
+  light2.shadowBias = 0.0001;
+  light2.shadowDarkness = 0.2;
+  light2.shadowMapWidth = 4096;
+  light2.shadowMapHeight = 4096;
+  scene.add(light2);
+
   var lightOp = new THREE.SpotLight(0xaaccff, 1, 0);
   lightOp.position.set(50, 20, -35);
   // lightOp.castShadow = true;
@@ -165,13 +174,10 @@ function init() {
 
       // Three posible cases in which we decide to move one of the three vertices that make up the face
       if (rInt == 0) {
-        // console.log('move aV', !(modifiedVertex.indexOf(aF) != -1));
         randomizeMove(rInt2, aF, aV, faceNormal, modifiedVertex, 0.5, 0.1);
       } else if (rInt == 1) {
-        // console.log('move bV', !(modifiedVertex.indexOf(bF) != -1));
         randomizeMove(rInt2, bF, bV, faceNormal, modifiedVertex, 0.5, 0.1);
       } else {
-        // console.log('move cV', !(modifiedVertex.indexOf(cF) != -1));
         randomizeMove(rInt2, cF, cV, faceNormal, modifiedVertex, 0.1, 0.1);
       }
     }
@@ -186,8 +192,8 @@ function init() {
   recognizeVertex('mainObject');
 
   var facesNormals = new THREE.FaceNormalsHelper(mainObject, 0.2, 0xff0000, 0.2);
-  var vertexNormals = new THREE.VertexNormalsHelper(mainObject, 0.2, 0x000000, 0.2);
-  var wireframe = new THREE.WireframeHelper(mainObject, 0x0000ff );
+  var vertexNormals = new THREE.VertexNormalsHelper(mainObject, 0.2, 0x444444, 0.2);
+  var wireframe = new THREE.WireframeHelper(mainObject, 0x444444 );
   facesNormals.name = 'facesNormals';
   // scene.add(facesNormals);
   // scene.add(wireframe);
