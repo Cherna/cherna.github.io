@@ -7,6 +7,8 @@ var center = new THREE.Vector3(0, 0, 0);
 var mouseX = 0;
 var mouseY = 0;
 
+var rotateMainObject = true;
+
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
@@ -34,7 +36,10 @@ function init() {
 
   renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
   renderer.setSize(winWidth, winHeight);
-  document.body.appendChild(renderer.domElement);
+  $('.main-content')
+    .append(renderer.domElement)
+    .find('canvas')
+    .addClass('home-canvas');
   renderer.shadowMapEnabled = true;
   renderer.shadowMapSoft = true;
   renderer.shadowMapType = THREE.PCFShadowMap;
@@ -155,51 +160,19 @@ function init() {
       var faceNormal = thisFace.normal;
       // aV, bV and cV all belong to the same face in every iteration
       // They can be moved safely outwards along the face normal
-      // if (i >= 90 && i <= 100) {
       var rInt = randomInt(0, 2);
-          rInt2 = randomInt(0, 1);
-      // console.log(rInt, rInt2);
+      var rInt2 = randomInt(0, 1);
+
       // Three posible cases in which we decide to move one of the three vertices that make up the face
       if (rInt == 0) {
         // console.log('move aV', !(modifiedVertex.indexOf(aF) != -1));
-        // Check if the index of this vertex is in the modifiedVertex array
-        if (!(modifiedVertex.indexOf(aF) != -1)) {
-          // Then decide if we add or substract that face normal, moving the vertex ouside or inside the geometry
-          if (rInt2 > 0) {
-            aV.add(faceNormal.multiplyScalar(0.5));
-          } else {
-            aV.sub(faceNormal.multiplyScalar(0.1));
-          }
-          // Then push that vertex index to the modifiedVertex array to
-          // keep track of the vertex already moved (thus preventing weird stuff?)
-          modifiedVertex.push(aF);
-        } else {
-          // console.log('aV already modified');
-        }
+        randomizeMove(rInt2, aF, aV, faceNormal, modifiedVertex, 0.5, 0.1);
       } else if (rInt == 1) {
         // console.log('move bV', !(modifiedVertex.indexOf(bF) != -1));
-        if (!(modifiedVertex.indexOf(bF) != -1)) {
-          if (rInt2 > 0) {
-            bV.add(faceNormal.multiplyScalar(0.5));
-          } else {
-            bV.sub(faceNormal.multiplyScalar(0.1));
-          }
-          modifiedVertex.push(bF);
-        } else {
-          // console.log('bV already modified');
-        }
+        randomizeMove(rInt2, bF, bV, faceNormal, modifiedVertex, 0.5, 0.1);
       } else {
         // console.log('move cV', !(modifiedVertex.indexOf(cF) != -1));
-        if (!(modifiedVertex.indexOf(cF) != -1)) {
-          if (rInt2 > 0) {
-            cV.add(faceNormal.multiplyScalar(0.1));
-          } else {
-            cV.sub(faceNormal.multiplyScalar(0.1));
-          }
-          modifiedVertex.push(cF);
-        } else {
-          // console.log('cV already modified');
-        }
+        randomizeMove(rInt2, cF, cV, faceNormal, modifiedVertex, 0.1, 0.1);
       }
     }
     // console.log(modifiedVertex);
@@ -220,10 +193,25 @@ function init() {
   // scene.add(wireframe);
   // scene.add(vertexNormals);
 
-  $('canvas').on('scroll', function(e) {
-      console.log(e);
+  $('.home-canvas').on('click', function(e) {
+    rotateMainObject = !rotateMainObject;
   });
 };
+
+function randomizeMove(randomInt, faceIndex, vertex, normal, modifiedArray, scalarAdd, scalarSubstract) {
+  // Check if the index of this vertex is in the modifiedVertex array
+  if (!(modifiedArray.indexOf(faceIndex) !== -1)) {
+    // Then decide if we add or substract that face normal, moving the vertex ouside or inside the geometry
+    if (randomInt > 0) {
+      vertex.add(normal.multiplyScalar(scalarAdd));
+    } else {
+      vertex.sub(normal.multiplyScalar(scalarSubstract));
+    }
+    // Then push that vertex index to the modifiedVertex array to
+    // keep track of the vertex already moved (thus preventing weird stuff?)
+    modifiedArray.push(faceIndex);
+  }
+}
 
 function animate(ts) {
   renderer.render(scene, camera);
@@ -235,9 +223,11 @@ function animate(ts) {
   // console.log(camera.position.x, camera.position.y);
   camera.lookAt( center );
 
-  scene.getObjectByName('mainObject').rotation.y += 0.003;
-  // scene.getObjectByName('mainObject').rotation.x += 0.001;
-  // scene.getObjectByName('mainObject').rotation.z += 0.002;
+  if (rotateMainObject) {
+    scene.getObjectByName('mainObject').rotation.y += 0.004;
+    // scene.getObjectByName('mainObject').rotation.x += 0.001;
+    // scene.getObjectByName('mainObject').rotation.z += 0.002;
+  }
 }
 
 init();
