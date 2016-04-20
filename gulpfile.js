@@ -20,17 +20,6 @@ gulp.task('styles', function() {
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
-// Script concatenation
-
-gulp.task('scripts', function() {
-  return gulp.src('public/js/*.js')
-    .pipe(concat('main_compiled.js'))
-    .pipe(gulp.dest('dist/js/'))
-    // .pipe(uglify())
-    // .pipe(gulp.dest('js'))
-    .pipe(notify({ message: 'Scripts task complete' }));
-});
-
 // Image Compression
 
 gulp.task('images', function() {

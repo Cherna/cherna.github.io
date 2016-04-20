@@ -48,7 +48,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "postinstall": "gulp default"
+    "postinstall": "gulp styles browserify"
   },
   "author": "Tomas Chernov",
   "license": "ISC"
