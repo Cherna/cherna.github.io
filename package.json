@@ -32,7 +32,7 @@
     ]
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "npm install && node app.js"
   },
   "author": "Tomas Chernov",
   "license": "ISC"
