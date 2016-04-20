@@ -1,0 +1,38 @@
+.main-nav
+  display flex
+  flex-direction column
+  justify-content center
+  height 100%
+  padding 0 10px
+  z-index 150
+  transform translateZ(0)
+  .home-link
+    position absolute
+    top 10px
+    left 50%
+    transform translateX(-50%)
+    width 50px
+    img
+      width 100%
+  .nav-item
+    position relative
+    margin 8px 0
+    padding-left 4px
+    line-height 16px
+    color #222228
+    opacity 0.4
+    transition opacity 0.15s ease-in-out
+    .item-text
+      display inline-block
+      border-bottom 1px solid #222228
+      padding-bottom 3px
+    .item-text-en
+      display block
+      padding-top 3px
+    .item-text,
+    .item-text-en
+      font-size 14px
+      font-weight 300
+      letter-spacing 1px
+    &:hover
+      opacity 0.7

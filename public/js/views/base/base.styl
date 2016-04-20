@@ -1,17 +1,23 @@
-* {
+*
   margin 0
   padding 0
   border 0
   text-rendering geometricPrecision
-}
+  box-sizing border-box
 
-html, body {
+html, body
   width 100%
   height 100%
   font-family 'Open Sans', Helvetica, sans-serif
-}
 
-a {
+a
   color inherit
   text-decoration none
-}
+
+.inner-body
+  display flex
+  opacity 1
+  transition opacity 0.3s ease-in-out
+  &.hide
+    opacity 0
+    transition none

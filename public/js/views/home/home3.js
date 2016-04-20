@@ -1,3 +1,5 @@
+var randomInt = require('../../utils/random-int');
+
 function home3D () {
 // Global Variables
 var scene, camera, renderer;
@@ -13,9 +15,6 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 // Utility functions
-function randomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
 function randomFloat(min, max) {
   return Math.random() * (max - min) + min;
 };
