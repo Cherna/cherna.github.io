@@ -4,6 +4,8 @@ function home3D () {
 // Global Variables
 var scene, camera, renderer;
 
+var animationData = {};
+
 var center = new THREE.Vector3(0, 0, 0);
 
 var mouseX = 0;
@@ -220,7 +222,7 @@ function randomizeMove(randomInt, faceIndex, vertex, normal, modifiedArray, scal
 
 function animate(ts) {
   renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+  animationData.animID = requestAnimationFrame(animate);
 
   camera.position.x = ( mouseX - camera.position.x ) * 0.005;
   // Voy a estudiar matematica
@@ -237,6 +239,7 @@ function animate(ts) {
 
 init();
 animate();
+return animationData;
 }
 
 module.exports = home3D;

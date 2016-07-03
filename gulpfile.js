@@ -25,7 +25,7 @@ gulp.task('styles', function() {
 gulp.task('images', function() {
   return gulp.src('public/images/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/images/optimized'))
+    .pipe(gulp.dest('dist/img/optimized'))
     .pipe(notify({ message: 'Images task complete' }));
 });
 
@@ -46,7 +46,7 @@ gulp.task('default', function() {
     gulp.start(
       'styles',
       'browserify',
-      // 'images',
+      'images',
       'watch');
 });
 
@@ -59,6 +59,6 @@ gulp.task('watch', function() {
   gulp.watch(['public/js/**/*.js', 'public/**/*.jade', 'views/**/*.jade'], ['browserify']);
 
   // Watch image files
-  // gulp.watch('public/images/*', ['images']);
+  gulp.watch('public/images/*', ['images']);
 
 });

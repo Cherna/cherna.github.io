@@ -10,6 +10,8 @@ var randomInt = require('../../utils/random-int');
 
 var quotes = require('./quotes.js');
 
+var animData;
+
 function selectQuote (quotes) {
   var newInt = randomInt(0, quotes.length-1);
   return quotes[newInt];
@@ -17,7 +19,17 @@ function selectQuote (quotes) {
 
 function home (context, next) {
   render(context, template, { quote: selectQuote(quotes) });
-  custom3D();
+  animData = custom3D();
 }
 
-module.exports = home;
+function homeExit (context, next) {
+  console.log('homeExit');
+  cancelAnimationFrame(animData.animID);
+  console.log(animData.animID);
+  next();
+}
+
+module.exports = {
+  homeEnter: home,
+  homeExit: homeExit
+};
