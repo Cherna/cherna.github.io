@@ -2,38 +2,57 @@
   position fixed
   display flex
   flex-direction column
-  justify-content center
   height 100%
   padding 0 10px
+  width 100px
   z-index 150
   transform translateZ(0)
+  &.home
+    .works
+      opacity 1
+      .item-text
+        border-left 1px solid #faa
+        padding-left 4px
   .home-link
-    position absolute
-    top 10px
-    left 50%
-    transform translateX(-50%)
-    width 50px
-    img
-      width 100%
+    margin 10px 0
+    text-transform uppercase
+    font-weight 300
+    opacity 0.8
+    transition opacity 0.15s ease-in-out
+    &:hover
+      opacity 1
+    .item-text
+      display block
+      letter-spacing 1px
+      &:first-child
+        letter-spacing 0.42em
   .nav-item
     position relative
     margin 8px 0
-    padding-left 4px
     line-height 16px
     color #222228
-    opacity 0.4
+    opacity 0.6
     transition opacity 0.15s ease-in-out
     .item-text
       display inline-block
-      border-bottom 1px solid #222228
-      padding-bottom 3px
-    .item-text-en
-      display block
-      padding-top 3px
-    .item-text,
-    .item-text-en
       font-size 14px
       font-weight 300
-      letter-spacing 1px
+      letter-spacing 2px
     &:hover
-      opacity 0.7
+      opacity 1
+    &.expanded
+      .expand
+        transform rotateZ(180deg)
+  .expand
+    width 0
+    height 0
+    border-style solid
+    border-width 5px 5px 0 5px
+    border-color #222 transparent transparent transparent
+    display inline-block
+    margin 0 0 2px 5px
+    transition transform 0.2s ease-in-out
+    transform-origin 50%
+    cursor pointer
+  .inner-list
+    display none

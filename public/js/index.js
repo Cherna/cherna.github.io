@@ -1,4 +1,7 @@
+// Include page manager
 var page = require('page');
+// global script
+var initScript = require('./utils/init-script');
 // Views
 var home = require('./views/home/home').homeEnter;
 var homeExit = require('./views/home/home').homeExit;
@@ -7,6 +10,7 @@ var restos = require('./views/restos/restos');
 var alambres = require('./views/alambres/alambres');
 // Vendor global scripts
 var pace = require('../vendor/pace.min');
+var wow = require('../vendor/wow.min').WOW;
 
 $(document).ready(function() {
 
@@ -14,16 +18,16 @@ $(document).ready(function() {
 
   page(function(context, next) {
     $('.pace-done, .pace-inactive').removeClass('pace-done pace-inactive');
-    pace.start();
-    pace.on('done', function() {
-      console.log('done');
+    pace.once('done', function() {
+      // console.log('done');
       $('.inner-body').removeClass('hide');
-    })
+      new wow().init();
+    });
+    pace.start();
     next();
   });
 
   page.exit(function(context, next) {
-    pace.off('done');
     $('.inner-body').addClass('hide');
     next();
   });
@@ -33,12 +37,14 @@ $(document).ready(function() {
   page('/home', home);
   page.exit('/home', homeExit);
 
-  page('/obra', obra);
+  page('/works', '/home');
 
-  page('/obra/restos', restos);
+  page('/works/caves', restos);
 
-  page('/obra/alambres', alambres);
+  page('/works/inner-spaces', alambres);
 
   page();
+
+  initScript();
 
 });

@@ -1,13 +1,19 @@
 .main-nav
   a.home-link(href="#/")
-    img(src="img/logo.png")
-  a.nav-item(href="#/obra")
-    span.item-text Obras
-    span.item-text-en Works
-  a.nav-item(href="#/cv")
-    span.item-text CV
-  a.nav-item(href="#/bio")
-    span.item-text Bio
+    span.item-text Tomas
+    span.item-text Chernov
+  .nav-item.works
+    a(href="#/works").item-text Works
+    span.expand
+    ul.inner-list
+      li
+        a(href="#/works/inner-spaces") Inner Spaces
+      li
+        a(href="#/works/caves") Caves
+  .nav-item
+    a(href="#/cv").item-text CV
+  .nav-item
+    a(href="#/bio").item-text Bio
   //- a.nav-item(href="#/restos")
   //-   span.item-text Restos
   //-   span.item-text-en Leftovers
