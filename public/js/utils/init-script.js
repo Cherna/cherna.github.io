@@ -5,7 +5,7 @@ function init () {
     if ( $clickedEl.hasClass('expand') || $clickedEl.hasClass('item-text') ) {
       var $link = $(e.target).closest('.nav-item');
       $link.toggleClass('expanded');
-      $link.find('.inner-list').slideToggle();
+      $link.find('.inner-list').stop().slideToggle();
     }
   });
 }

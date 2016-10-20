@@ -1,13 +1,15 @@
 function render (context, template, options) {
   var pathClass = context.path.split('/');
+  var classText = pathClass[pathClass.length-1];
+  console.log(pathClass, classText);
   
   $('.main-nav')
     .removeClass()
-    .addClass('main-nav ' + pathClass[pathClass.length-1]);
+    .addClass('main-nav ' + classText);
 
   $('.main-content')
     .removeClass()
-    .addClass('main-content ' + pathClass[pathClass.length-1])
+    .addClass('main-content ' + classText)
     .html(template(options));
 }
 

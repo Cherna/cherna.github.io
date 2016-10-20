@@ -19,7 +19,6 @@ $(document).ready(function() {
   page(function(context, next) {
     $('.pace-done, .pace-inactive').removeClass('pace-done pace-inactive');
     pace.once('done', function() {
-      // console.log('done');
       $('.inner-body').removeClass('hide');
       new wow().init();
     });

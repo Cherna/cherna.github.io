@@ -7,7 +7,8 @@
   width 100px
   z-index 150
   transform translateZ(0)
-  &.home
+  font-weight 300
+  &.home, &.inner-spaces, &.caves
     .works
       opacity 1
       .item-text
@@ -29,6 +30,7 @@
   .nav-item
     position relative
     margin 8px 0
+    white-space nowrap
     line-height 16px
     color #222228
     opacity 0.6
@@ -36,7 +38,6 @@
     .item-text
       display inline-block
       font-size 14px
-      font-weight 300
       letter-spacing 2px
     &:hover
       opacity 1
@@ -44,11 +45,11 @@
       .expand
         transform rotateZ(180deg)
   .expand
-    width 0
-    height 0
-    border-style solid
-    border-width 5px 5px 0 5px
-    border-color #222 transparent transparent transparent
+    font-size 20px
+    position relative
+    top 2px
+    margin-left 5px
+    padding 5px
     display inline-block
     margin 0 0 2px 5px
     transition transform 0.2s ease-in-out
@@ -56,3 +57,9 @@
     cursor pointer
   .inner-list
     display none
+    list-style none
+    padding-left 5px
+    li
+      font-size 14px
+      white-space nowrap
+      margin 8px 0
