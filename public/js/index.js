@@ -11,12 +11,14 @@ var alambres = require('./views/alambres/alambres');
 // Vendor global scripts
 var pace = require('../vendor/pace.min');
 var wow = require('../vendor/wow.min').WOW;
+var getCurrentSafeTitle = require('./utils/get-title');
 
 $(document).ready(function() {
 
   page.base('/#');
 
   page(function(context, next) {
+    document.title = getCurrentSafeTitle(context);
     $('.pace-done, .pace-inactive').removeClass('pace-done pace-inactive');
     pace.once('done', function() {
       $('.inner-body').removeClass('hide');

@@ -32,12 +32,16 @@ gulp.task('images', function() {
 // Browserify
 
 gulp.task('browserify', function() {
-    return browserify('public/js/index.js')
-        .bundle()
-        //Pass desired output filename to vinyl-source-stream
-        .pipe(source('bundle.js'))
-        // Start piping stream to tasks!
-        .pipe(gulp.dest('dist/js/'));
+  return browserify('public/js/index.js')
+    .transform('babelify', {
+      presets: ["es2015"],
+      ignore: /wow\.min\.js/
+    })
+    .bundle()
+    //Pass desired output filename to vinyl-source-stream
+    .pipe(source('bundle.js'))
+    // Start piping stream to tasks!
+    .pipe(gulp.dest('dist/js/'));
 });
 
 // Default Task

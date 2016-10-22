@@ -1,15 +1,15 @@
+var parseContext = require('./parse-context');
 function render (context, template, options) {
-  var pathClass = context.path.split('/');
-  var classText = pathClass[pathClass.length-1];
-  console.log(pathClass, classText);
+  var ctx = parseContext(context);
+  console.log(ctx);
   
   $('.main-nav')
     .removeClass()
-    .addClass('main-nav ' + classText);
+    .addClass('main-nav ' + ctx.classText);
 
   $('.main-content')
     .removeClass()
-    .addClass('main-content ' + classText)
+    .addClass('main-content ' + ctx.classText)
     .html(template(options));
 }
 
