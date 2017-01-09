@@ -1,34 +1,55 @@
 // Include page manager
-var page = require('page');
-// global script
-var initScript = require('./utils/init-script');
-// Views
-var home = require('./views/home/home').homeEnter;
-var homeExit = require('./views/home/home').homeExit;
-var obra = require('./views/obra/obra');
-var restos = require('./views/restos/restos');
-var alambres = require('./views/alambres/alambres');
-// Vendor global scripts
-var pace = require('../vendor/pace.min');
-var wow = require('../vendor/wow.min').WOW;
-var getCurrentSafeTitle = require('./utils/get-title');
+const page = require('page');
 
-$(document).ready(function() {
+// global script
+const initScript = require('./utils/init-script');
+
+// Views
+const notFound = require('./views/base/notfound.jade');
+const home = require('./views/home/home').homeEnter;
+const homeExit = require('./views/home/home').homeExit;
+const obra = require('./views/obra/obra');
+const restos = require('./views/restos/restos');
+const alambres = require('./views/alambres/alambres');
+
+// Vendor global scripts
+const pace = require('../vendor/pace.min');
+const wow = require('../vendor/wow.min').WOW;
+const getCurrentSafeTitle = require('./utils/get-title');
+
+// Helpers
+const render = require('./utils/render');
+const parseContext = require('./utils/parse-context');
+
+function initPace () {
+  $('.pace-done, .pace-inactive').removeClass('pace-done pace-inactive');
+  pace.once('done', function() {
+    $('.inner-body').removeClass('hide');
+    new wow().init();
+  });
+  pace.start();
+}
+
+function selectSidebarItem (context) {
+  var sideBar = $('#main-nav');
+  sideBar.find('.selected').removeClass('selected');
+  var parsedContext = parseContext(context);
+  if (!parsedContext || !parsedContext.classText) { return; }
+  sideBar.find('[data-btn-handle="' + parsedContext.classText.toLowerCase() + '"]').addClass('selected');
+}
+
+$(document).ready(() => {
 
   page.base('/#');
 
-  page(function(context, next) {
+  page((context, next) => {
     document.title = getCurrentSafeTitle(context);
-    $('.pace-done, .pace-inactive').removeClass('pace-done pace-inactive');
-    pace.once('done', function() {
-      $('.inner-body').removeClass('hide');
-      new wow().init();
-    });
-    pace.start();
+    initPace();
+    selectSidebarItem(context);
     next();
   });
 
-  page.exit(function(context, next) {
+  page.exit((context, next) => {
     $('.inner-body').addClass('hide');
     next();
   });
@@ -43,6 +64,11 @@ $(document).ready(function() {
   page('/works/caves', restos);
 
   page('/works/inner-spaces', alambres);
+
+  // 404 handler
+  page('*', () => {
+    render('404', notFound);
+  })
 
   page();
 

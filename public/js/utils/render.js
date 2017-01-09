@@ -1,7 +1,11 @@
-var parseContext = require('./parse-context');
+const parseContext = require('./parse-context');
 function render (context, template, options) {
-  var ctx = parseContext(context);
-  console.log(ctx);
+  let ctx = {};
+  if (typeof context === 'string') {
+    ctx.classText = context;
+  } else {
+    ctx = parseContext(context);
+  }
   
   $('.main-nav')
     .removeClass()

@@ -1,5 +1,5 @@
-var template = require('./home.jade');
-var render = require('../../utils/render');
+const template = require('./home.jade');
+const render = require('../../utils/render');
 
 function home (context, next) {
   render(context, template);

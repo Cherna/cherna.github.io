@@ -1,16 +1,15 @@
-.main-nav
-  a.home-link(href="#/")
+.main-nav#main-nav
+  a.home-link(href="#/" data-btn-handle="home")
     span.item-text Tomas
     span.item-text Chernov
   .nav-item.works
-    a(href="#/works").item-text Works
-    span.expand +
+    span.nav-title Works _
     ul.inner-list
       li.inner-spaces
-        a(href="#/works/inner-spaces") Inner Spaces
+        a.item-text(href="#/works/inner-spaces" data-btn-handle="inner-spaces") Inner Spaces
       li.caves
-        a(href="#/works/caves") Caves
-  .nav-item
-    a(href="#/cv").item-text CV
-  .nav-item
-    a(href="#/bio").item-text Bio
+        a.item-text(href="#/works/caves" data-btn-handle="caves") Caves
+  //- .nav-item
+  //-   a(href="#/cv").item-text CV
+  //- .nav-item
+  //-   a(href="#/bio").item-text Bio

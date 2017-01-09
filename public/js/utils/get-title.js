@@ -7,7 +7,7 @@ function getCurrentTitle (context) {
     return val == parsedContext.classText;
   });
 
-  return mappings[mappingIndex];
+  return 'Tomas Chernov - ' + mappings[mappingIndex];
 }
 
 module.exports = getCurrentTitle;
