@@ -38,6 +38,8 @@ function selectSidebarItem (context) {
 
 $(document).ready(() => {
 
+  initScript();
+
   page.base('/#');
 
   page((context, next) => {
@@ -52,7 +54,7 @@ $(document).ready(() => {
     next();
   });
 
-  page('/', '/works/inner-spaces');
+  page('/', '/works/' + window.latestWorks);
 
   page('/works', '/home');
 
@@ -66,7 +68,5 @@ $(document).ready(() => {
   })
 
   page();
-
-  initScript();
 
 });
