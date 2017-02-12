@@ -1,4 +1,4 @@
-var template = require('./obra.jade');
+var template = require('./obra.pug');
 var render = require('../../utils/render');
 
 module.exports = function obra (context, next) {

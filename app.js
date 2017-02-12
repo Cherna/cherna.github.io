@@ -3,7 +3,7 @@ var app = express();
 var routes = require('./routes/routes.js');
 var port = process.env.PORT || 3000;
 
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.set('views', 'public/js/views');
 app.use(express.static('dist'));
 

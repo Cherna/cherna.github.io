@@ -8,7 +8,6 @@ var notify = require('gulp-notify');
 var cache = require('gulp-cache');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-var jadeify = require('jadeify');
 
 // Scss compilation
 
@@ -61,7 +60,7 @@ gulp.task('watch', function() {
   gulp.watch(['public/**/*.styl', ], ['styles']);
 
   // Watch .js files
-  gulp.watch(['public/js/**/*.js', 'public/**/*.jade', 'views/**/*.jade'], ['browserify']);
+  gulp.watch(['public/js/**/*.js', 'public/**/*.pug', 'views/**/*.pug'], ['browserify']);
 
   // Watch image files
   gulp.watch('public/images/*', ['images']);

@@ -15,6 +15,8 @@ function render (context, template, options) {
     .removeClass()
     .addClass('main-content ' + ctx.classText)
     .html(template(options));
+
+  $('html, body').scrollTop(0);
 }
 
 module.exports = render;

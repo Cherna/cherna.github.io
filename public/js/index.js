@@ -1,13 +1,11 @@
 // Include page manager
 const page = require('page');
 
-// global script
+// Global script
 const initScript = require('./utils/init-script');
 
 // Views
-const notFound = require('./views/base/notfound.jade');
-const home = require('./views/home/home').homeEnter;
-const homeExit = require('./views/home/home').homeExit;
+const notFound = require('./views/base/notfound.pug');
 const obra = require('./views/obra/obra');
 const restos = require('./views/restos/restos');
 const alambres = require('./views/alambres/alambres');
@@ -54,10 +52,7 @@ $(document).ready(() => {
     next();
   });
 
-  page('/', '/home');
-
-  page('/home', home);
-  page.exit('/home', homeExit);
+  page('/', '/works/inner-spaces');
 
   page('/works', '/home');
 

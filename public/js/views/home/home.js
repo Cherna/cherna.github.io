@@ -1,4 +1,4 @@
-const template = require('./home.jade');
+const template = require('./home.pug');
 const render = require('../../utils/render');
 
 function home (context, next) {
