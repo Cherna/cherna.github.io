@@ -9,6 +9,7 @@ const notFound = require('./views/base/notfound.pug');
 const obra = require('./views/obra/obra');
 const restos = require('./views/restos/restos');
 const alambres = require('./views/alambres/alambres');
+const sculpture = require('./views/sculpture/sculpture');
 
 // Vendor global scripts
 const pace = require('../vendor/pace.min');
@@ -61,6 +62,8 @@ $(document).ready(() => {
   page('/works/caves', restos);
 
   page('/works/inner-spaces', alambres);
+
+  page('/works/sculpture', sculpture);
 
   // 404 handler
   page('*', () => {

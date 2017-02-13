@@ -1,5 +1,5 @@
 function init () {
-  window.latestWorks = "inner-spaces";
+  window.latestWorks = "sculpture";
 }
 
 module.exports = init;
