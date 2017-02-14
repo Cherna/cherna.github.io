@@ -10,6 +10,7 @@ const obra = require('./views/obra/obra');
 const restos = require('./views/restos/restos');
 const alambres = require('./views/alambres/alambres');
 const sculpture = require('./views/sculpture/sculpture');
+const about = require('./views/about/about');
 
 // Vendor global scripts
 const pace = require('../vendor/pace.min');
@@ -30,11 +31,16 @@ function initPace () {
 }
 
 function selectSidebarItem (context) {
-  var sideBar = $('#main-nav');
+  const sideBar = $('#main-nav');
   sideBar.find('.selected').removeClass('selected');
-  var parsedContext = parseContext(context);
+  const parsedContext = parseContext(context);
   if (!parsedContext || !parsedContext.classText) { return; }
   sideBar.find('[data-btn-handle="' + parsedContext.classText.toLowerCase() + '"]').addClass('selected');
+}
+
+function closeSidebar () {
+  const mobileNav = $('#mobile-nav');
+  mobileNav.removeClass('mobile-open');
 }
 
 $(document).ready(() => {
@@ -47,6 +53,7 @@ $(document).ready(() => {
     document.title = getCurrentSafeTitle(context);
     initPace();
     selectSidebarItem(context);
+    closeSidebar();
     next();
   });
 
@@ -64,6 +71,8 @@ $(document).ready(() => {
   page('/works/inner-spaces', alambres);
 
   page('/works/sculpture', sculpture);
+
+  page('/about', about);
 
   // 404 handler
   page('*', () => {

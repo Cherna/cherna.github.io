@@ -3,15 +3,25 @@
   display flex
   flex-direction column
   height 100%
-  padding 0 10px
+  padding 10px 10px 0
   width 100px
   z-index 150
   transform translateZ(0)
   font-weight 300
   color #222228
+  @media screen and (max-width: $tablet)
+    flex-direction row
+    padding 10px 10px 12px
+    height auto
+    width 100%
+    background-color #fafafa
+    align-items center
+  .main-nav-content
+    padding-left 5px
+    @media screen and (max-width: $tablet)
+      display none
   .home-link
     font-family 'Open Sans'
-    margin 10px 0 5px 0
     text-transform lowercase
     opacity 0.75
     transition opacity 0.15s ease-in-out
@@ -48,3 +58,54 @@
       font-size 14px
       white-space nowrap
       margin 8px 0
+
+.mobile-nav
+  display none
+  margin-left 10px
+  @media screen and (max-width: $tablet)
+    display block
+  .mobile-nav-content
+    position absolute
+    background #fafafa
+    border-radius 3px
+    border 1px solid #ccc
+    padding 1px 3px
+    opacity 0
+    transform translateY(-5px)
+    pointer-events none
+    transition opacity 0.2s ease-in-out, transform 0.2s ease-in-out
+  &.mobile-open
+    .mobile-nav-content
+      opacity 1
+      transform translateY(10px)
+      pointer-events all
+    .hamburger
+      opacity 0
+    .hamburger-top
+      transform rotateZ(45deg) translateY(4px) translateX(3px)
+    .hamburger-bottom
+      transform rotateZ(-45deg) translateY(-4px) translateX(3px)
+  .hamburger-cont
+    position relative
+    cursor pointer
+    user-select none
+    top 1px
+  .hamburger
+    display inline-block
+    width 23px
+    height 3px
+    margin 5px 0
+    background-color #555
+    transition opacity 0.2s ease-in-out
+  .hamburger-top, .hamburger-bottom
+    position absolute
+    left 0
+    content ''
+    width 23px
+    height 3px
+    background-color #555
+    transition transform 0.2s ease-in-out
+  .hamburger-top
+    top 0px
+  .hamburger-bottom
+    bottom 0px
