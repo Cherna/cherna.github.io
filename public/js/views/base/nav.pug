@@ -18,10 +18,13 @@
         li.cv
           a.item-text(href="#/about" data-btn-handle="") Bio / CV
   .mobile-nav#mobile-nav
+    //- We have cont and inner so we can have padding to ease
+    //- the clickability and still get the correct positioning
     .hamburger-cont
-      .hamburger
-      .hamburger-top
-      .hamburger-bottom
+      .hamburger-inner
+        .hamburger
+        .hamburger-top
+        .hamburger-bottom
     .mobile-nav-content
       .nav-item.works
         span.nav-title Works _
