@@ -11354,7 +11354,7 @@ $(document).ready(function () {
 
   page('/', '/works/' + window.__latestWorks);
 
-  page('/cherna-page', '/home');
+  page('/cherna-page', '/works/' + window.__latestWorks);
 
   page('/works', '/home');
 
