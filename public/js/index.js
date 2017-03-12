@@ -49,7 +49,7 @@ $(document).ready(() => {
 
   page.base('/cherna-page/#');
 
-  console.log(8);
+  console.log(9);
 
   page((context, next) => {
     document.title = getCurrentSafeTitle(context);
