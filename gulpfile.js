@@ -1,15 +1,18 @@
 var gulp = require('gulp');
-var stylus = require('gulp-stylus');
 var autoprefixer = require('gulp-autoprefixer');
-var minifycss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var imagemin = require('gulp-imagemin');
-var concat = require('gulp-concat');
+var stylus = require('gulp-stylus');
 var notify = require('gulp-notify');
-var cache = require('gulp-cache');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var pug = require('gulp-pug');
 var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var cache = require('gulp-cache');
+var pug = require('gulp-pug');
+
+var browserify = require('browserify');
+
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 
 // Scss compilation
 
@@ -18,6 +21,7 @@ gulp.task('styles', function() {
     .pipe(stylus({
       'include css': true
     }))
+    .pipe(cleanCSS({ level: 2 }))
     .pipe(gulp.dest('./css/'))
     .pipe(notify({ message: 'Styles task complete' }));
 });
@@ -42,6 +46,8 @@ gulp.task('browserify', function() {
     .bundle()
     //Pass desired output filename to vinyl-source-stream
     .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(uglify())
     // Start piping stream to tasks!
     .pipe(gulp.dest('./js'));
 });
