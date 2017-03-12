@@ -47,7 +47,7 @@ $(document).ready(() => {
 
   initScript();
 
-  page.base('/#');
+  page.base('/cherna-page');
 
   page((context, next) => {
     document.title = getCurrentSafeTitle(context);
