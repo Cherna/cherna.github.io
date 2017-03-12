@@ -47,7 +47,7 @@ $(document).ready(() => {
 
   initScript();
 
-  page.base('http://cherna.github.io/cherna-page');
+  page.base('/cherna-page/#');
 
   console.log(8);
 
