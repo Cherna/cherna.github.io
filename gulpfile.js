@@ -43,7 +43,7 @@ gulp.task('browserify', function() {
     //Pass desired output filename to vinyl-source-stream
     .pipe(source('bundle.js'))
     // Start piping stream to tasks!
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./js'));
 });
 
 // pug.compileFile('public/js/views/base/layout.pug')
