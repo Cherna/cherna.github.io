@@ -8,6 +8,8 @@ var notify = require('gulp-notify');
 var cache = require('gulp-cache');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var pug = require('gulp-pug');
+var rename = require('gulp-rename');
 
 // Scss compilation
 
@@ -25,7 +27,7 @@ gulp.task('styles', function() {
 gulp.task('images', function() {
   return gulp.src('public/images/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/img/optimized'))
+    .pipe(gulp.dest('dist/img'))
     .pipe(notify({ message: 'Images task complete' }));
 });
 
@@ -44,11 +46,24 @@ gulp.task('browserify', function() {
     .pipe(gulp.dest('dist/js/'));
 });
 
+// pug.compileFile('public/js/views/base/layout.pug')
+
+// Static index
+gulp.task('index', function() {
+  gulp.src('public/js/views/base/layout.pug')
+    .pipe(pug({
+      pretty: true
+    }))
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest('./dist'));
+});
+
 // Default Task
 
 gulp.task('default', function() {
     gulp.start(
       'styles',
+      'index',
       'browserify',
       'images',
       'watch');
@@ -60,7 +75,7 @@ gulp.task('watch', function() {
   gulp.watch(['public/**/*.styl', ], ['styles']);
 
   // Watch .js files
-  gulp.watch(['public/js/**/*.js', 'public/**/*.pug', 'views/**/*.pug'], ['browserify']);
+  gulp.watch(['public/js/**/*.js', 'public/**/*.pug', 'views/**/*.pug'], ['index', 'browserify']);
 
   // Watch image files
   gulp.watch('public/images/*', ['images']);

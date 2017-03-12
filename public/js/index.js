@@ -62,7 +62,7 @@ $(document).ready(() => {
     next();
   });
 
-  page('/', '/works/' + window.latestWorks);
+  page('/', '/works/' + window.__latestWorks);
 
   page('/works', '/home');
 

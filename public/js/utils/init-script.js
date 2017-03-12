@@ -1,8 +1,14 @@
 function init () {
-  // Set latest works
-  window.latestWorks = "sculpture";
+  // Global jQuery ftw
+  window.$ = window.jQuery = require('jquery');
+
+  // Set global states
+  window.__latestWorks = "sculpture";
+  window.__fullScreenImageViewerOpen = false;
 
   // General use DOM elements
+  const $body = $('body');
+  const $innerBody = $('.inner-body');
   const $mobileNav = $('#mobile-nav');
   const $hamburgerIcon = $('.hamburger-cont');
 
@@ -16,14 +22,14 @@ function init () {
   // Global click handler
   $('html').on('click', (e) => {
     const $target = $(e.target);
-    console.log($target);
+    // console.log($target);
     navEvents($target);
     imageEvents($target);
   });
 
   // Nav functionality
   function navEvents ($target) {
-    const allowedClasses = ['hamburger', 'hamburger-cont', 'hamburger-top', 'hamburger-bottom'];
+    const allowedClasses = ['hamburger', 'hamburger-cont', 'hamburger-top', 'hamburger-bottom', 'hamburger-inner'];
     const isNavEvent = checkClassNames($target, allowedClasses);
     const navIsOpen = $mobileNav.hasClass('mobile-open');
 
@@ -36,8 +42,6 @@ function init () {
 
   // Images Functionality
   function imageEvents ($target) {
-    const allowedClasses = ['image-box-outer', 'image-box-img'];
-
   }
 }
 

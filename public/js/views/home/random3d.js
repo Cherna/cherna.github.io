@@ -124,7 +124,7 @@ function init() {
       boxSegments = 5,
       // mainGeometry = new THREE.SphereGeometry(1, 16, 16);
       mainGeometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize, boxSegments, boxSegments, boxSegments);
-  var texture = THREE.ImageUtils.loadTexture('assets/images/optimized/sand-texture-lq.jpg', {}, function() {
+  var texture = THREE.ImageUtils.loadTexture('assets/images/sand-texture-lq.jpg', {}, function() {
     renderer.render(scene, camera);
   });
 
