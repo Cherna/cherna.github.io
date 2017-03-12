@@ -18,7 +18,7 @@ gulp.task('styles', function() {
     .pipe(stylus({
       'include css': true
     }))
-    .pipe(gulp.dest('dist/css/'))
+    .pipe(gulp.dest('./css/'))
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
@@ -27,7 +27,7 @@ gulp.task('styles', function() {
 gulp.task('images', function() {
   return gulp.src('public/images/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/img'))
+    .pipe(gulp.dest('./img'))
     .pipe(notify({ message: 'Images task complete' }));
 });
 
@@ -43,7 +43,7 @@ gulp.task('browserify', function() {
     //Pass desired output filename to vinyl-source-stream
     .pipe(source('bundle.js'))
     // Start piping stream to tasks!
-    .pipe(gulp.dest('dist/js/'));
+    .pipe(gulp.dest('./'));
 });
 
 // pug.compileFile('public/js/views/base/layout.pug')
@@ -55,7 +55,7 @@ gulp.task('index', function() {
       pretty: true
     }))
     .pipe(rename('index.html'))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./'));
 });
 
 // Default Task
