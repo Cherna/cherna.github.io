@@ -11333,7 +11333,9 @@ $(document).ready(function () {
 
   initScript();
 
-  page.base('/cherna-page');
+  page.base('http://cherna.github.io/cherna-page');
+
+  console.log(8);
 
   page(function (context, next) {
     document.title = getCurrentSafeTitle(context);
