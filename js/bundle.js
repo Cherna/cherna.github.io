@@ -11333,7 +11333,7 @@ $(document).ready(function () {
 
   initScript();
 
-  page.base('/cherna-page/#');
+  page.base('/#');
 
   page(function (context, next) {
     document.title = getCurrentSafeTitle(context);
