@@ -11333,9 +11333,11 @@ $(document).ready(function () {
 
   initScript();
 
-  page.base('/cherna-page/#');
-
-  console.log(10);
+  if (window.location.host.toLowerCase() == 'cherna.github.io') {
+    page.base('/cherna-page/#');
+  } else {
+    page.base('/#');
+  }
 
   page(function (context, next) {
     document.title = getCurrentSafeTitle(context);
