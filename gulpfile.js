@@ -14,7 +14,7 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
-// Scss compilation
+// Stylus compilation
 
 gulp.task('styles', function() {
   gulp.src('public/styl/style.styl')

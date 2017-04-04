@@ -47,11 +47,7 @@ $(document).ready(() => {
 
   initScript();
 
-  if (window.location.host.toLowerCase() == 'cherna.github.io') {
-    page.base('/cherna-page/#');
-  } else {
-    page.base('/#');
-  }
+  page.base('/#');
 
   page((context, next) => {
     document.title = getCurrentSafeTitle(context);
@@ -68,9 +64,9 @@ $(document).ready(() => {
 
   page('/', '/works/' + window.__latestWorks);
 
-  page('/cherna-page', '/works/' + window.__latestWorks);
-
-  page('/works', '/home');
+  // Redirect any URL works related that's not
+  // a specific section to the latest works
+  page('/works', '/#');
 
   page('/works/caves', restos);
 
@@ -81,6 +77,7 @@ $(document).ready(() => {
   page('/about', about);
 
   // 404 handler
+  // Executes when no other route was found
   page('*', () => {
     render('404', notFound);
   })
