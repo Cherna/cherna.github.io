@@ -1,25 +1,31 @@
-var gulp = require('gulp');
-var autoprefixer = require('gulp-autoprefixer');
-var cleanCSS = require('gulp-clean-css');
-var imagemin = require('gulp-imagemin');
-var stylus = require('gulp-stylus');
-var notify = require('gulp-notify');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var cache = require('gulp-cache');
-var pug = require('gulp-pug');
+const gulp = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+const cleanCSS = require('gulp-clean-css');
+const imagemin = require('gulp-imagemin');
+const stylus = require('gulp-stylus');
+const notify = require('gulp-notify');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const cache = require('gulp-cache');
+const pug = require('gulp-pug');
+const plumber = require('gulp-plumber');
 
-var browserify = require('browserify');
+const browserify = require('browserify');
 
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 
 // Stylus compilation
 
 gulp.task('styles', function() {
   gulp.src('public/styl/style.styl')
+    .pipe(plumber())
     .pipe(stylus({
       'include css': true
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
     }))
     .pipe(cleanCSS({ level: 2 }))
     .pipe(gulp.dest('./css/'))
@@ -30,6 +36,7 @@ gulp.task('styles', function() {
 
 gulp.task('images', function() {
   return gulp.src('public/images/*')
+    .pipe(plumber())
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest('./img'))
     .pipe(notify({ message: 'Images task complete' }));
@@ -44,10 +51,11 @@ gulp.task('browserify', function() {
       ignore: /wow\.min\.js/
     })
     .bundle()
+    .on('error', (err) => console.error( new Error(err) ))
     //Pass desired output filename to vinyl-source-stream
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(uglify())
+    // .pipe(uglify())
     // Start piping stream to tasks!
     .pipe(gulp.dest('./js'));
 });
@@ -57,6 +65,7 @@ gulp.task('browserify', function() {
 // Static index
 gulp.task('index', function() {
   gulp.src('public/js/views/base/layout.pug')
+    .pipe(plumber())
     .pipe(pug({
       pretty: true
     }))

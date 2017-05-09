@@ -1,5 +1,5 @@
-var mappings = require('./title-mappings');
-var parseContext = require('./parse-context');
+const mappings = require('./title-mappings');
+const parseContext = require('./parse-context');
 function getCurrentTitle (context) {
   var parsedContext = parseContext(context);
 

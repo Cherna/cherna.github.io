@@ -6,7 +6,6 @@ const initScript = require('./utils/init-script');
 
 // Views
 const notFound = require('./views/base/notfound.pug');
-const obra = require('./views/obra/obra');
 const restos = require('./views/restos/restos');
 const alambres = require('./views/alambres/alambres');
 const sculpture = require('./views/sculpture/sculpture');

@@ -2,6 +2,24 @@ mixin images-section
   div.images-section
     block
 
-mixin image-box(img)
+mixin image-box(imgs)
   div.image-box-outer
-    img.image-box-img(src=img)
+    div.image-box-inner
+      each img in imgs
+        .image-wrapper
+          img.image-box-img(src=img)
+    block
+
+mixin image-description(name, info)
+  div.image-description-cont
+    span.image-description
+      span.work-name #{name}, 
+      span.work-info= info
+    block
+mixin image-slider
+  div.image-slider
+    block
+
+mixin image-set
+  div.image-set
+    block

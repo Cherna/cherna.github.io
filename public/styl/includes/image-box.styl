@@ -1,11 +1,44 @@
-.image-box-outer
+.image-set
+  position relative
   height 100vh
   display flex
-  flex-direction column
-  justify-content center
   align-items center
+  justify-content center
+.image-slider
+  width 100%
+.image-box-outer
+  .image-box-inner
+    height 70vh
+  .image-wrapper
+    position relative
+    display flex
+    align-items center
+    justify-content center
   .image-box-img
-    max-width 86%
-    max-height 86%
+    display block
     pointer-events none
     user-select none
+    margin 0 auto
+    height auto
+    width auto
+    max-height 70vh
+.image-description-cont
+  padding 20px 0
+  text-align center
+  font-size 12px
+  .work-name
+    font-size 16px
+.arrows-container
+  margin-top 10px
+  .slick-prev, .slick-next
+    position static
+    display inline-block
+    transform none
+    margin 0 5px
+    vertical-align middle
+    &:before
+      color #222
+      font-size 16px
+.slide-numbers
+  display inline-block
+  font-size 10px
