@@ -2,11 +2,25 @@
   max-width 980px
   margin 0 auto
   padding 50px 20px
+  .bio-container, .contact-container
+    background #eee
+    padding 30px
+    border-radius 3px
+    margin 5px 0
+  .contact-container
+    display inline-block
+    @media screen and (max-width:$tablet)
+      display block
+      text-align center
   .me-image
     width 100px
     height 100px
-    background-color #aaa
     float right
     margin 0 15px 15px 15px
+    border-radius 50%
+    @media screen and (max-width:$phone)
+      float none
+      display block
+      margin 0 auto 15px
   .bio-content
     width 100%

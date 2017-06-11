@@ -3,11 +3,15 @@ mixin images-section
     block
 
 mixin image-box(imgs)
-  div.image-box-outer
+  div.image-box-outer(data-carousel=(Array.isArray(imgs) && imgs.length > 1) || false)
     div.image-box-inner
-      each img in imgs
+      if Array.isArray(imgs)
+        each img in imgs
+          .image-wrapper
+            img.image-box-img(src=img)
+      else
         .image-wrapper
-          img.image-box-img(src=img)
+          img.image-box-img(src=imgs)
     block
 
 mixin image-description(name, info)

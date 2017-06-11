@@ -1,4 +1,6 @@
 const parseContext = require('./parse-context');
+const createSlider = require('./createSlider');
+
 function render (context, template, options) {
   let ctx = {};
   if (typeof context === 'string') {
@@ -11,10 +13,18 @@ function render (context, template, options) {
     .removeClass()
     .addClass('main-nav ' + ctx.classText);
 
-  $('.main-content')
+  const $mainContent = $('.main-content');
+  $mainContent
     .removeClass()
     .addClass('main-content ' + ctx.classText)
-    .html(template(options));
+    .html(template(options))
+  
+  const $contentCarousels = $mainContent.find('[data-carousel]');
+  if ($contentCarousels.length) {
+    $contentCarousels.each((i, el) => {
+      createSlider($(el).find('.image-box-inner'));
+    });
+  }
 
   $('html, body').scrollTop(0);
 }

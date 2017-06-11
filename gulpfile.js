@@ -37,7 +37,7 @@ gulp.task('styles', function() {
 gulp.task('images', function() {
   return gulp.src('public/images/*')
     .pipe(plumber())
-    .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+    .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
     .pipe(gulp.dest('./img'))
     .pipe(notify({ message: 'Images task complete' }));
 });
@@ -57,7 +57,8 @@ gulp.task('browserify', function() {
     .pipe(buffer())
     // .pipe(uglify())
     // Start piping stream to tasks!
-    .pipe(gulp.dest('./js'));
+    .pipe(gulp.dest('./js'))
+    .pipe(notify({message: 'Browserify task complete'}))
 });
 
 // pug.compileFile('public/js/views/base/layout.pug')

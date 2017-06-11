@@ -4,6 +4,16 @@
   display flex
   align-items center
   justify-content center
+  @media screen and (max-width:$tablet)
+    width 80%
+    margin 0 auto
+  @media screen and (max-width:768px)
+    height auto
+    margin 150px auto
+    .image-box-inner
+      height auto !important
+    .slick-slide
+      height auto
 .image-slider
   width 100%
 .image-box-outer
@@ -22,6 +32,8 @@
     height auto
     width auto
     max-height 70vh
+    @media screen and (max-width:$tablet)
+      width 100%
 .image-description-cont
   padding 20px 0
   text-align center

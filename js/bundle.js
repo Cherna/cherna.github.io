@@ -11012,6 +11012,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -14184,10 +14188,9 @@ var initScript = require('./utils/init-script');
 
 // Views
 var notFound = require('./views/base/notfound.pug');
-var restos = require('./views/restos/restos');
-var alambres = require('./views/alambres/alambres');
-var sculpture = require('./views/sculpture/sculpture');
-var about = require('./views/about/about');
+var year2016 = require('./views/2016');
+var year2017 = require('./views/2017');
+var about = require('./views/about');
 
 // Vendor global scripts
 var pace = require('../vendor/pace.min');
@@ -14241,18 +14244,14 @@ $(document).ready(function () {
     next();
   });
 
-  page('/', '/works/' + window.__latestWorks);
-
-  // Redirect any URL works related that's not
-  // a specific section to the latest works
+  // Latest year of works
+  page('/', '/works/2017');
+  // Redirect generic works to latest
   page('/works', '/#');
-
-  page('/works/caves', restos);
-
-  page('/works/inner-spaces', alambres);
-
-  page('/works/sculpture', sculpture);
-
+  // Works pages
+  page('/works/2017', year2017);
+  page('/works/2016', year2016);
+  // Other pages
   page('/about', about);
 
   // 404 handler
@@ -14264,7 +14263,7 @@ $(document).ready(function () {
   page();
 });
 
-},{"../vendor/pace.min":26,"../vendor/wow.min":27,"./utils/get-title":12,"./utils/init-script":13,"./utils/parse-context":14,"./utils/render":15,"./views/about/about":17,"./views/alambres/alambres":19,"./views/base/notfound.pug":21,"./views/restos/restos":22,"./views/sculpture/sculpture":24,"page":4}],11:[function(require,module,exports){
+},{"../vendor/pace.min":24,"../vendor/wow.min":25,"./utils/get-title":12,"./utils/init-script":13,"./utils/parse-context":14,"./utils/render":15,"./views/2016":18,"./views/2017":20,"./views/about":22,"./views/base/notfound.pug":23,"page":4}],11:[function(require,module,exports){
 'use strict';
 
 var slick = require('slick-carousel');
@@ -14394,6 +14393,8 @@ module.exports = parseContext;
 'use strict';
 
 var parseContext = require('./parse-context');
+var createSlider = require('./createSlider');
+
 function render(context, template, options) {
   var ctx = {};
   if (typeof context === 'string') {
@@ -14404,99 +14405,34 @@ function render(context, template, options) {
 
   $('.main-nav').removeClass().addClass('main-nav ' + ctx.classText);
 
-  $('.main-content').removeClass().addClass('main-content ' + ctx.classText).html(template(options));
+  var $mainContent = $('.main-content');
+  $mainContent.removeClass().addClass('main-content ' + ctx.classText).html(template(options));
+
+  var $contentCarousels = $mainContent.find('[data-carousel]');
+  if ($contentCarousels.length) {
+    $contentCarousels.each(function (i, el) {
+      createSlider($(el).find('.image-box-inner'));
+    });
+  }
 
   $('html, body').scrollTop(0);
 }
 
 module.exports = render;
 
-},{"./parse-context":14}],16:[function(require,module,exports){
+},{"./createSlider":11,"./parse-context":14}],16:[function(require,module,exports){
 module.exports={
   "home"         : "Home",
-  "caves"        : "Caves",
-  "inner-spaces" : "Inner Spaces"
+  "2017"         : "2017",
+  "2016"         : "2016"
 }
 },{}],17:[function(require,module,exports){
-'use strict';
-
-var template = require('./about.pug');
-var render = require('../../utils/render');
-
-module.exports = function alambres(context, next) {
-  render(context, template);
-};
-
-},{"../../utils/render":15,"./about.pug":18}],18:[function(require,module,exports){
-var pug = require('pug-runtime');
-module.exports=template;function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
-var pug_indent = [];
-
-pug_html = pug_html + "\n\u003Cdiv id=\"about\"\u003E";
-
-pug_html = pug_html + "\u003Cimg class=\"me-image\" src=\"\"\u002F\u003E";
-
-pug_html = pug_html + "\n  \u003Cdiv class=\"bio-content\"\u003E";
-
-pug_html = pug_html + "Nací el 11 de julio de 1992 en Buenos Aires. Estudié artes visuales en la UMSA asistiendo a la par al taller de ";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.boladenieve.org.ar\u002Fartista\u002F20692\u002Fmingo-jorge\"\u003E";
-
-pug_html = pug_html + "Jorge Mingo. \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "Participé de la beca ";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fproyectarte.org\"\u003E";
-
-pug_html = pug_html + "Proyectarte \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "en dos ocasiones, teniendo como profesores a ";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.maxgomezcanle.com.ar\"\u003E";
-
-pug_html = pug_html + "Max Gomez Canle, \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.ernestoballesteros.com\"\u003E";
-
-pug_html = pug_html + "Ernesto Ballesteros, \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.karinapeisajovich.com\"\u003E";
-
-pug_html = pug_html + "Karina Peisajovich, \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.sicardi.com\u002Fartists\u002Fpablo-siquier\"\u003E";
-
-pug_html = pug_html + "Pablo Siquier, \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "\u003Ca href=\"https:\u002F\u002Fluxlindner.com\"\u003E";
-
-pug_html = pug_html + "Lux Lindner. \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "Luego comencé a asistir al taller de ";
-
-pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fcynthiakampelmacher.blogspot.com.ar\"\u003E";
-
-pug_html = pug_html + "Cynthia Kampelmacher \u003C\u002Fa\u003E";
-
-pug_html = pug_html + "al cual asisto hasta el día de la fecha.\u003C\u002Fdiv\u003E\n\u003C\u002Fdiv\u003E";return pug_html;}
-
-},{"fs":2,"pug-runtime":8}],19:[function(require,module,exports){
-'use strict';
-
-var template = require('./alambres.pug');
-var render = require('../../utils/render');
-
-module.exports = function alambres(context, next) {
-  render(context, template);
-};
-
-},{"../../utils/render":15,"./alambres.pug":20}],20:[function(require,module,exports){
 var pug = require('pug-runtime');
 module.exports=template;function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
 function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
 var pug_match_html=/["&<>]/;
 function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
-var pug_indent = [];
+;var locals_for_with = (locals || {});(function (Array) {var pug_indent = [];
 
 pug_mixins["images-section"] = pug_interp = function(){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -14518,11 +14454,13 @@ var block = (this && this.block), attributes = (this && this.attributes) || {};
 
 pug_html = pug_html + "\n";
 pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"image-box-outer\"\u003E";
+pug_html = pug_html + "\u003Cdiv" + (" class=\"image-box-outer\""+pug_attr("data-carousel", (Array.isArray(imgs) && imgs.length > 1) || false, true, false)) + "\u003E";
 
 pug_html = pug_html + "\n  ";
 pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003Cdiv class=\"image-box-inner\"\u003E";
+
+if (Array.isArray(imgs)) {
 
 // iterate imgs
 ;(function(){
@@ -14552,6 +14490,15 @@ pug_html = pug_html + "\u003Cimg" + (" class=\"image-box-img\""+pug_attr("src", 
   }
 }).call(this);
 
+}
+else {
+
+pug_html = pug_html + "\n    ";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003Cdiv class=\"image-wrapper\"\u003E";
+
+pug_html = pug_html + "\u003Cimg" + (" class=\"image-box-img\""+pug_attr("src", imgs, true, false)) + "\u002F\u003E\u003C\u002Fdiv\u003E";
+}
 pug_html = pug_html + "\n  ";
 pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003C\u002Fdiv\u003E";
@@ -14564,62 +14511,62 @@ pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003C\u002Fdiv\u003E";
 };
 
+pug_mixins["image-description"] = pug_interp = function(name, info){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
 
+pug_html = pug_html + "\n";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003Cdiv class=\"image-description-cont\"\u003E";
 
+pug_html = pug_html + "\u003Cspan class=\"image-description\"\u003E";
 
+pug_html = pug_html + "\u003Cspan class=\"work-name\"\u003E";
 
+pug_html = pug_html + (pug_escape(null == (pug_interp = name) ? "" : pug_interp));
 
+pug_html = pug_html + ", \u003C\u002Fspan\u003E";
 
+pug_html = pug_html + "\u003Cspan class=\"work-info\"\u003E";
 
+pug_html = pug_html + (pug_escape(null == (pug_interp = info) ? "" : pug_interp)) + "\u003C\u002Fspan\u003E\u003C\u002Fspan\u003E";
 
+pug_indent.push('  ');
+block && block();
+pug_indent.pop();
+pug_html = pug_html + "\n";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+};
 
+pug_mixins["image-slider"] = pug_interp = function(){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
 
+pug_html = pug_html + "\n";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003Cdiv class=\"image-slider\"\u003E";
 
+pug_indent.push('  ');
+block && block();
+pug_indent.pop();
+pug_html = pug_html + "\n";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+};
 
+pug_mixins["image-set"] = pug_interp = function(){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
 
+pug_html = pug_html + "\n";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003Cdiv class=\"image-set\"\u003E";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+pug_indent.push('  ');
+block && block();
+pug_indent.pop();
+pug_html = pug_html + "\n";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+};
 
 pug_html = pug_html + "\n\u003Cdiv id=\"alambres\"\u003E";
 
@@ -14628,237 +14575,126 @@ pug_mixins["images-section"].call({
 block: function(){
 
 pug_indent.push('');
-pug_mixins["image-box"]('img/Alambre-11.jpg');
-pug_indent.pop();
-
-pug_indent.push('');
-pug_mixins["image-box"]('img/Alambre-5-web.jpg');
-pug_indent.pop();
-
-pug_indent.push('');
-pug_mixins["image-box"]('img/Alambre-12-web.jpg');
-pug_indent.pop();
-
-pug_indent.push('');
-pug_mixins["image-box"]('img/Alambre-2-web.jpg');
-pug_indent.pop();
-}
-});
-pug_indent.pop();
-pug_html = pug_html + "\n\u003C\u002Fdiv\u003E";return pug_html;}
-
-},{"fs":2,"pug-runtime":8}],21:[function(require,module,exports){
-var pug = require('pug-runtime');
-module.exports=template;function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
-function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
-var pug_match_html=/["&<>]/;
-function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
-;var locals_for_with = (locals || {});(function (window) {var pug_indent = [];
-
-pug_html = pug_html + "\n\u003Cdiv class=\"not-found-page\"\u003E";
-
-pug_html = pug_html + "\n  \u003Cdiv class=\"sad-face\"\u003E";
-
-pug_html = pug_html + ")";
-
-pug_html = pug_html + "\u003Cspan class=\"eyes\"\u003E";
-
-pug_html = pug_html + ":\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
-
-pug_html = pug_html + "\n  \u003Cdiv class=\"not-found-text\"\u003E";
-
-pug_html = pug_html + "Couldn't find what you were looking for.\u003C\u002Fdiv\u003E";
-
-pug_html = pug_html + "\n  \u003Cdiv class=\"back-to-latest\"\u003E";
-
-pug_html = pug_html + "But you can go ";
-
-pug_html = pug_html + "\u003Ca" + (pug_attr("href", "#/works/" + window.__latestWorks, true, false)) + "\u003E";
-
-pug_html = pug_html + "back to the latest works\u003C\u002Fa\u003E";
-
-pug_html = pug_html + ".\u003C\u002Fdiv\u003E\n\u003C\u002Fdiv\u003E";}.call(this,"window" in locals_for_with?locals_for_with.window:typeof window!=="undefined"?window:undefined));return pug_html;}
-
-},{"fs":2,"pug-runtime":8}],22:[function(require,module,exports){
-'use strict';
-
-var template = require('./restos.pug');
-var render = require('../../utils/render');
-
-module.exports = function restos(context, next) {
-  render(context, template);
-};
-
-},{"../../utils/render":15,"./restos.pug":23}],23:[function(require,module,exports){
-var pug = require('pug-runtime');
-module.exports=template;function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
-function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
-var pug_match_html=/["&<>]/;
-function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
-var pug_indent = [];
-
-pug_mixins["images-section"] = pug_interp = function(){
-var block = (this && this.block), attributes = (this && this.attributes) || {};
-
-pug_html = pug_html + "\n";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"images-section\"\u003E";
-
-pug_indent.push('  ');
-block && block();
-pug_indent.pop();
-pug_html = pug_html + "\n";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003C\u002Fdiv\u003E";
-};
-
-pug_mixins["image-box"] = pug_interp = function(imgs){
-var block = (this && this.block), attributes = (this && this.attributes) || {};
-
-pug_html = pug_html + "\n";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"image-box-outer\"\u003E";
-
-pug_html = pug_html + "\n  ";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"image-box-inner\"\u003E";
-
-// iterate imgs
-;(function(){
-  var $$obj = imgs;
-  if ('number' == typeof $$obj.length) {
-      for (var pug_index0 = 0, $$l = $$obj.length; pug_index0 < $$l; pug_index0++) {
-        var img = $$obj[pug_index0];
-
-pug_html = pug_html + "\n    ";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"image-wrapper\"\u003E";
-
-pug_html = pug_html + "\u003Cimg" + (" class=\"image-box-img\""+pug_attr("src", img, true, false)) + "\u002F\u003E\u003C\u002Fdiv\u003E";
-      }
-  } else {
-    var $$l = 0;
-    for (var pug_index0 in $$obj) {
-      $$l++;
-      var img = $$obj[pug_index0];
-
-pug_html = pug_html + "\n    ";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"image-wrapper\"\u003E";
-
-pug_html = pug_html + "\u003Cimg" + (" class=\"image-box-img\""+pug_attr("src", img, true, false)) + "\u002F\u003E\u003C\u002Fdiv\u003E";
-    }
-  }
-}).call(this);
-
-pug_html = pug_html + "\n  ";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003C\u002Fdiv\u003E";
-
-pug_indent.push('  ');
-block && block();
-pug_indent.pop();
-pug_html = pug_html + "\n";
-pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003C\u002Fdiv\u003E";
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-pug_html = pug_html + "\n\u003Cdiv id=\"alambres\"\u003E";
-
-pug_indent.push('  ');
-pug_mixins["images-section"].call({
+pug_mixins["image-set"].call({
 block: function(){
 
 pug_indent.push('');
-pug_mixins["image-box"]('img/cueva-2.jpg');
-pug_indent.pop();
+pug_mixins["image-slider"].call({
+block: function(){
 
 pug_indent.push('');
-pug_mixins["image-box"]('img/manufactura-1.jpg');
+pug_mixins["image-box"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-description"]('"Sin Titulo (Alambres)"', '2016');
+pug_indent.pop();
+}
+}, ['img/Alambre 1.jpg', 'img/Alambre 6.jpg', 'img/Alambre 3.jpg', 'img/Alambre 4.jpg', 'img/Alambre 5.jpg', 'img/Alambre 11.jpg', 'img/Alambre 12.jpg']);
 pug_indent.pop();
 }
 });
 pug_indent.pop();
-pug_html = pug_html + "\n\u003C\u002Fdiv\u003E";return pug_html;}
+}
+});
+pug_indent.pop();
 
-},{"fs":2,"pug-runtime":8}],24:[function(require,module,exports){
+pug_indent.push('');
+pug_mixins["image-set"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-slider"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-box"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-description"]('"Sin Titulo (Manufactura 1)"', '2016');
+pug_indent.pop();
+}
+}, ['img/manufactura 1 - 1.jpg', 'img/manufactura 1 - 2.jpg']);
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+
+pug_indent.push('');
+pug_mixins["image-set"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-slider"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-box"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-description"]('"Sin Titulo (Manufactura 2)"', '2016');
+pug_indent.pop();
+}
+}, ['img/manufactura 2 - 1.jpg', 'img/manufactura 2 - 2.jpg']);
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+
+pug_indent.push('');
+pug_mixins["image-set"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-slider"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-box"].call({
+block: function(){
+
+pug_indent.push('');
+pug_mixins["image-description"]('"Sin Titulo (Cuevas)"', '2016');
+pug_indent.pop();
+}
+}, ['img/Cueva 1.jpg', 'img/Cueva 2.jpg', 'img/Cueva 3.jpg']);
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+}
+});
+pug_indent.pop();
+pug_html = pug_html + "\n\u003C\u002Fdiv\u003E";}.call(this,"Array" in locals_for_with?locals_for_with.Array:typeof Array!=="undefined"?Array:undefined));return pug_html;}
+
+},{"fs":2,"pug-runtime":8}],18:[function(require,module,exports){
 'use strict';
 
-var template = require('./sculpture.pug');
+var template = require('./2016.pug');
 var render = require('../../utils/render');
-var createSlider = require('../../utils/createSlider');
 
-module.exports = function sculpture(context, next) {
+module.exports = function alambres(context, next) {
   render(context, template);
-
-  var $section = $('#sculpture');
-  createSlider($section.find('.image-slider .image-box-inner'));
 };
 
-},{"../../utils/createSlider":11,"../../utils/render":15,"./sculpture.pug":25}],25:[function(require,module,exports){
+},{"../../utils/render":15,"./2016.pug":17}],19:[function(require,module,exports){
 var pug = require('pug-runtime');
 module.exports=template;function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
 function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
 var pug_match_html=/["&<>]/;
 function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
-var pug_indent = [];
+;var locals_for_with = (locals || {});(function (Array) {var pug_indent = [];
 
 pug_mixins["images-section"] = pug_interp = function(){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -14880,11 +14716,13 @@ var block = (this && this.block), attributes = (this && this.attributes) || {};
 
 pug_html = pug_html + "\n";
 pug_html = pug_html + pug_indent.join("");
-pug_html = pug_html + "\u003Cdiv class=\"image-box-outer\"\u003E";
+pug_html = pug_html + "\u003Cdiv" + (" class=\"image-box-outer\""+pug_attr("data-carousel", (Array.isArray(imgs) && imgs.length > 1) || false, true, false)) + "\u003E";
 
 pug_html = pug_html + "\n  ";
 pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003Cdiv class=\"image-box-inner\"\u003E";
+
+if (Array.isArray(imgs)) {
 
 // iterate imgs
 ;(function(){
@@ -14914,6 +14752,15 @@ pug_html = pug_html + "\u003Cimg" + (" class=\"image-box-img\""+pug_attr("src", 
   }
 }).call(this);
 
+}
+else {
+
+pug_html = pug_html + "\n    ";
+pug_html = pug_html + pug_indent.join("");
+pug_html = pug_html + "\u003Cdiv class=\"image-wrapper\"\u003E";
+
+pug_html = pug_html + "\u003Cimg" + (" class=\"image-box-img\""+pug_attr("src", imgs, true, false)) + "\u002F\u003E\u003C\u002Fdiv\u003E";
+}
 pug_html = pug_html + "\n  ";
 pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003C\u002Fdiv\u003E";
@@ -15052,9 +14899,129 @@ pug_indent.pop();
 }
 });
 pug_indent.pop();
-pug_html = pug_html + "\n\u003C\u002Fdiv\u003E";return pug_html;}
+pug_html = pug_html + "\n\u003C\u002Fdiv\u003E";}.call(this,"Array" in locals_for_with?locals_for_with.Array:typeof Array!=="undefined"?Array:undefined));return pug_html;}
 
-},{"fs":2,"pug-runtime":8}],26:[function(require,module,exports){
+},{"fs":2,"pug-runtime":8}],20:[function(require,module,exports){
+'use strict';
+
+var template = require('./2017.pug');
+var render = require('../../utils/render');
+
+module.exports = function sculpture(context, next) {
+  render(context, template);
+};
+
+},{"../../utils/render":15,"./2017.pug":19}],21:[function(require,module,exports){
+var pug = require('pug-runtime');
+module.exports=template;function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
+var pug_indent = [];
+
+pug_html = pug_html + "\n\u003Cdiv id=\"about\"\u003E";
+
+pug_html = pug_html + "\n  \u003Cdiv class=\"bio-container\"\u003E";
+
+pug_html = pug_html + "\u003Cimg class=\"me-image\" src=\"https:\u002F\u002Fgraph.facebook.com\u002F1020394548\u002Fpicture?type=large\"\u002F\u003E";
+
+pug_html = pug_html + "\n    \u003Cdiv class=\"bio-content\"\u003E";
+
+pug_html = pug_html + "Nací el 11 de julio de 1992 en Buenos Aires. Estudié artes visuales en la UMSA asistiendo a la par al taller de pintura experimental de";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.boladenieve.org.ar\u002Fartista\u002F20692\u002Fmingo-jorge\"\u003E";
+
+pug_html = pug_html + "Jorge Mingo. \u003C\u002Fa\u003E";
+
+pug_html = pug_html + "Participé de la beca para jovenes";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fproyectarte.org\"\u003E";
+
+pug_html = pug_html + "Proyectarte \u003C\u002Fa\u003E";
+
+pug_html = pug_html + "en dos ocasiones, teniendo como profesores a ";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.maxgomezcanle.com.ar\"\u003E";
+
+pug_html = pug_html + "Max Gomez Canle, \u003C\u002Fa\u003E";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.ernestoballesteros.com\"\u003E";
+
+pug_html = pug_html + "Ernesto Ballesteros, \u003C\u002Fa\u003E";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.karinapeisajovich.com\"\u003E";
+
+pug_html = pug_html + "Karina Peisajovich, \u003C\u002Fa\u003E";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fwww.sicardi.com\u002Fartists\u002Fpablo-siquier\"\u003E";
+
+pug_html = pug_html + "Pablo Siquier,\u003C\u002Fa\u003E";
+
+pug_html = pug_html + "y";
+
+pug_html = pug_html + "\u003Ca href=\"https:\u002F\u002Fluxlindner.com\"\u003E";
+
+pug_html = pug_html + "Lux Lindner,\u003C\u002Fa\u003E\n      ";
+
+pug_html = pug_html + "entre otros.";
+
+pug_html = pug_html + "\n      ";
+
+pug_html = pug_html + "Luego comencé a asistir al taller de ";
+
+pug_html = pug_html + "\u003Ca href=\"http:\u002F\u002Fcynthiakampelmacher.blogspot.com.ar\"\u003E";
+
+pug_html = pug_html + "Cynthia Kampelmacher \u003C\u002Fa\u003E";
+
+pug_html = pug_html + "al cual asisto hasta el día de la fecha.\n    \u003C\u002Fdiv\u003E\n  \u003C\u002Fdiv\u003E";
+
+pug_html = pug_html + "\n  \u003Cdiv class=\"contact-container\"\u003E";
+
+pug_html = pug_html + "\u003Cspan\u003E";
+
+pug_html = pug_html + "Contacto: ";
+
+pug_html = pug_html + "\u003Cb\u003E";
+
+pug_html = pug_html + "Chernatom@gmail.com\u003C\u002Fb\u003E\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E\n\u003C\u002Fdiv\u003E";return pug_html;}
+
+},{"fs":2,"pug-runtime":8}],22:[function(require,module,exports){
+'use strict';
+
+var template = require('./about.pug');
+var render = require('../../utils/render');
+
+module.exports = function alambres(context, next) {
+  render(context, template);
+};
+
+},{"../../utils/render":15,"./about.pug":21}],23:[function(require,module,exports){
+var pug = require('pug-runtime');
+module.exports=template;function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
+var pug_indent = [];
+
+pug_html = pug_html + "\n\u003Cdiv class=\"not-found-page\"\u003E";
+
+pug_html = pug_html + "\n  \u003Cdiv class=\"sad-face\"\u003E";
+
+pug_html = pug_html + ")";
+
+pug_html = pug_html + "\u003Cspan class=\"eyes\"\u003E";
+
+pug_html = pug_html + ":\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+
+pug_html = pug_html + "\n  \u003Cdiv class=\"not-found-text\"\u003E";
+
+pug_html = pug_html + "Couldn't find what you were looking for.\u003C\u002Fdiv\u003E";
+
+pug_html = pug_html + "\n  \u003Cdiv class=\"back-to-latest\"\u003E";
+
+pug_html = pug_html + "But you can go ";
+
+pug_html = pug_html + "\u003Ca href=\"#\u002Fworks\u002F\"\u003E";
+
+pug_html = pug_html + "back to the latest works\u003C\u002Fa\u003E";
+
+pug_html = pug_html + ".\u003C\u002Fdiv\u003E\n\u003C\u002Fdiv\u003E";return pug_html;}
+
+},{"fs":2,"pug-runtime":8}],24:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -15377,7 +15344,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }) : "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? module.exports = Pace : C.startOnPageLoad && Pace.start();
 }).call(undefined);
 
-},{}],27:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /*! WOW - v1.1.2 - 2016-04-08
 * Copyright (c) 2016 Matthieu Aussaguel;*/(function(){var a,b,c,d,e,f=function(a,b){return function(){return a.apply(b,arguments)}},g=[].indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(b in this&&this[b]===a)return b;return-1};b=function(){function a(){}return a.prototype.extend=function(a,b){var c,d;for(c in b)d=b[c],null==a[c]&&(a[c]=d);return a},a.prototype.isMobile=function(a){return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(a)},a.prototype.createEvent=function(a,b,c,d){var e;return null==b&&(b=!1),null==c&&(c=!1),null==d&&(d=null),null!=document.createEvent?(e=document.createEvent("CustomEvent"),e.initCustomEvent(a,b,c,d)):null!=document.createEventObject?(e=document.createEventObject(),e.eventType=a):e.eventName=a,e},a.prototype.emitEvent=function(a,b){return null!=a.dispatchEvent?a.dispatchEvent(b):b in(null!=a)?a[b]():"on"+b in(null!=a)?a["on"+b]():void 0},a.prototype.addEvent=function(a,b,c){return null!=a.addEventListener?a.addEventListener(b,c,!1):null!=a.attachEvent?a.attachEvent("on"+b,c):a[b]=c},a.prototype.removeEvent=function(a,b,c){return null!=a.removeEventListener?a.removeEventListener(b,c,!1):null!=a.detachEvent?a.detachEvent("on"+b,c):delete a[b]},a.prototype.innerHeight=function(){return"innerHeight"in window?window.innerHeight:document.documentElement.clientHeight},a}(),c=this.WeakMap||this.MozWeakMap||(c=function(){function a(){this.keys=[],this.values=[]}return a.prototype.get=function(a){var b,c,d,e,f;for(f=this.keys,b=d=0,e=f.length;e>d;b=++d)if(c=f[b],c===a)return this.values[b]},a.prototype.set=function(a,b){var c,d,e,f,g;for(g=this.keys,c=e=0,f=g.length;f>e;c=++e)if(d=g[c],d===a)return void(this.values[c]=b);return this.keys.push(a),this.values.push(b)},a}()),a=this.MutationObserver||this.WebkitMutationObserver||this.MozMutationObserver||(a=function(){function a(){"undefined"!=typeof console&&null!==console&&console.warn("MutationObserver is not supported by your browser."),"undefined"!=typeof console&&null!==console&&console.warn("WOW.js cannot detect dom mutations, please call .sync() after loading new content.")}return a.notSupported=!0,a.prototype.observe=function(){},a}()),d=this.getComputedStyle||function(a,b){return this.getPropertyValue=function(b){var c;return"float"===b&&(b="styleFloat"),e.test(b)&&b.replace(e,function(a,b){return b.toUpperCase()}),(null!=(c=a.currentStyle)?c[b]:void 0)||null},this},e=/(\-([a-z]){1})/g,this.WOW=function(){function e(a){null==a&&(a={}),this.scrollCallback=f(this.scrollCallback,this),this.scrollHandler=f(this.scrollHandler,this),this.resetAnimation=f(this.resetAnimation,this),this.start=f(this.start,this),this.scrolled=!0,this.config=this.util().extend(a,this.defaults),null!=a.scrollContainer&&(this.config.scrollContainer=document.querySelector(a.scrollContainer)),this.animationNameCache=new c,this.wowEvent=this.util().createEvent(this.config.boxClass)}return e.prototype.defaults={boxClass:"wow",animateClass:"animated",offset:0,mobile:!0,live:!0,callback:null,scrollContainer:null},e.prototype.init=function(){var a;return this.element=window.document.documentElement,"interactive"===(a=document.readyState)||"complete"===a?this.start():this.util().addEvent(document,"DOMContentLoaded",this.start),this.finished=[]},e.prototype.start=function(){var b,c,d,e;if(this.stopped=!1,this.boxes=function(){var a,c,d,e;for(d=this.element.querySelectorAll("."+this.config.boxClass),e=[],a=0,c=d.length;c>a;a++)b=d[a],e.push(b);return e}.call(this),this.all=function(){var a,c,d,e;for(d=this.boxes,e=[],a=0,c=d.length;c>a;a++)b=d[a],e.push(b);return e}.call(this),this.boxes.length)if(this.disabled())this.resetStyle();else for(e=this.boxes,c=0,d=e.length;d>c;c++)b=e[c],this.applyStyle(b,!0);return this.disabled()||(this.util().addEvent(this.config.scrollContainer||window,"scroll",this.scrollHandler),this.util().addEvent(window,"resize",this.scrollHandler),this.interval=setInterval(this.scrollCallback,50)),this.config.live?new a(function(a){return function(b){var c,d,e,f,g;for(g=[],c=0,d=b.length;d>c;c++)f=b[c],g.push(function(){var a,b,c,d;for(c=f.addedNodes||[],d=[],a=0,b=c.length;b>a;a++)e=c[a],d.push(this.doSync(e));return d}.call(a));return g}}(this)).observe(document.body,{childList:!0,subtree:!0}):void 0},e.prototype.stop=function(){return this.stopped=!0,this.util().removeEvent(this.config.scrollContainer||window,"scroll",this.scrollHandler),this.util().removeEvent(window,"resize",this.scrollHandler),null!=this.interval?clearInterval(this.interval):void 0},e.prototype.sync=function(b){return a.notSupported?this.doSync(this.element):void 0},e.prototype.doSync=function(a){var b,c,d,e,f;if(null==a&&(a=this.element),1===a.nodeType){for(a=a.parentNode||a,e=a.querySelectorAll("."+this.config.boxClass),f=[],c=0,d=e.length;d>c;c++)b=e[c],g.call(this.all,b)<0?(this.boxes.push(b),this.all.push(b),this.stopped||this.disabled()?this.resetStyle():this.applyStyle(b,!0),f.push(this.scrolled=!0)):f.push(void 0);return f}},e.prototype.show=function(a){return this.applyStyle(a),a.className=a.className+" "+this.config.animateClass,null!=this.config.callback&&this.config.callback(a),this.util().emitEvent(a,this.wowEvent),this.util().addEvent(a,"animationend",this.resetAnimation),this.util().addEvent(a,"oanimationend",this.resetAnimation),this.util().addEvent(a,"webkitAnimationEnd",this.resetAnimation),this.util().addEvent(a,"MSAnimationEnd",this.resetAnimation),a},e.prototype.applyStyle=function(a,b){var c,d,e;return d=a.getAttribute("data-wow-duration"),c=a.getAttribute("data-wow-delay"),e=a.getAttribute("data-wow-iteration"),this.animate(function(f){return function(){return f.customStyle(a,b,d,c,e)}}(this))},e.prototype.animate=function(){return"requestAnimationFrame"in window?function(a){return window.requestAnimationFrame(a)}:function(a){return a()}}(),e.prototype.resetStyle=function(){var a,b,c,d,e;for(d=this.boxes,e=[],b=0,c=d.length;c>b;b++)a=d[b],e.push(a.style.visibility="visible");return e},e.prototype.resetAnimation=function(a){var b;return a.type.toLowerCase().indexOf("animationend")>=0?(b=a.target||a.srcElement,b.className=b.className.replace(this.config.animateClass,"").trim()):void 0},e.prototype.customStyle=function(a,b,c,d,e){return b&&this.cacheAnimationName(a),a.style.visibility=b?"hidden":"visible",c&&this.vendorSet(a.style,{animationDuration:c}),d&&this.vendorSet(a.style,{animationDelay:d}),e&&this.vendorSet(a.style,{animationIterationCount:e}),this.vendorSet(a.style,{animationName:b?"none":this.cachedAnimationName(a)}),a},e.prototype.vendors=["moz","webkit"],e.prototype.vendorSet=function(a,b){var c,d,e,f;d=[];for(c in b)e=b[c],a[""+c]=e,d.push(function(){var b,d,g,h;for(g=this.vendors,h=[],b=0,d=g.length;d>b;b++)f=g[b],h.push(a[""+f+c.charAt(0).toUpperCase()+c.substr(1)]=e);return h}.call(this));return d},e.prototype.vendorCSS=function(a,b){var c,e,f,g,h,i;for(h=d(a),g=h.getPropertyCSSValue(b),f=this.vendors,c=0,e=f.length;e>c;c++)i=f[c],g=g||h.getPropertyCSSValue("-"+i+"-"+b);return g},e.prototype.animationName=function(a){var b;try{b=this.vendorCSS(a,"animation-name").cssText}catch(c){b=d(a).getPropertyValue("animation-name")}return"none"===b?"":b},e.prototype.cacheAnimationName=function(a){return this.animationNameCache.set(a,this.animationName(a))},e.prototype.cachedAnimationName=function(a){return this.animationNameCache.get(a)},e.prototype.scrollHandler=function(){return this.scrolled=!0},e.prototype.scrollCallback=function(){var a;return!this.scrolled||(this.scrolled=!1,this.boxes=function(){var b,c,d,e;for(d=this.boxes,e=[],b=0,c=d.length;c>b;b++)a=d[b],a&&(this.isVisible(a)?this.show(a):e.push(a));return e}.call(this),this.boxes.length||this.config.live)?void 0:this.stop()},e.prototype.offsetTop=function(a){for(var b;void 0===a.offsetTop;)a=a.parentNode;for(b=a.offsetTop;a=a.offsetParent;)b+=a.offsetTop;return b},e.prototype.isVisible=function(a){var b,c,d,e,f;return c=a.getAttribute("data-wow-offset")||this.config.offset,f=this.config.scrollContainer&&this.config.scrollContainer.scrollTop||window.pageYOffset,e=f+Math.min(this.element.clientHeight,this.util().innerHeight())-c,d=this.offsetTop(a),b=d+a.clientHeight,e>=d&&b>=f},e.prototype.util=function(){return null!=this._util?this._util:this._util=new b},e.prototype.disabled=function(){return!this.config.mobile&&this.util().isMobile(navigator.userAgent)},e}()}).call(this);
 },{}]},{},[10]);

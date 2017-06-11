@@ -6,10 +6,9 @@ const initScript = require('./utils/init-script');
 
 // Views
 const notFound = require('./views/base/notfound.pug');
-const restos = require('./views/restos/restos');
-const alambres = require('./views/alambres/alambres');
-const sculpture = require('./views/sculpture/sculpture');
-const about = require('./views/about/about');
+const year2016 = require('./views/2016');
+const year2017 = require('./views/2017');
+const about = require('./views/about');
 
 // Vendor global scripts
 const pace = require('../vendor/pace.min');
@@ -61,18 +60,14 @@ $(document).ready(() => {
     next();
   });
 
-  page('/', '/works/' + window.__latestWorks);
-
-  // Redirect any URL works related that's not
-  // a specific section to the latest works
+  // Latest year of works
+  page('/', '/works/2017');
+  // Redirect generic works to latest
   page('/works', '/#');
-
-  page('/works/caves', restos);
-
-  page('/works/inner-spaces', alambres);
-
-  page('/works/sculpture', sculpture);
-
+  // Works pages
+  page('/works/2017', year2017);
+  page('/works/2016', year2016);
+  // Other pages
   page('/about', about);
 
   // 404 handler
