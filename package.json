@@ -43,7 +43,7 @@
     ]
   },
   "scripts": {
-    "start": "python -m SimpleHTTPServer 3000"
+    "start": "python -m SimpleHTTPServer 5000"
   },
   "author": "Tomas Chernov",
   "license": "ISC"
