@@ -1,7 +1,7 @@
 // Global
 const $ = require('jquery');
 const page = require('page');
-const wow = require('wowjs');
+const wow = require('wowjs').WOW;
 const pace = require('pace-js');
 const initScript = require('./utils/init-script');
 const getCurrentSafeTitle = require('./utils/get-title');
