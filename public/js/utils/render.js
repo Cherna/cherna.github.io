@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const parseContext = require('./parse-context');
 const createSlider = require('./createSlider');
 

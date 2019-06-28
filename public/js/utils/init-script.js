@@ -1,16 +1,8 @@
 function init () {
-  // Global jQuery ftw
-  window.$ = window.jQuery = require('jquery');
-
-  // Set global states
-  window.__latestWorks = "sculpture";
-  window.__fullScreenImageViewerOpen = false;
+  const $ = require('jquery');
 
   // General use DOM elements
-  const $body = $('body');
-  const $innerBody = $('.inner-body');
   const $mobileNav = $('#mobile-nav');
-  const $hamburgerIcon = $('.hamburger-cont');
 
   // General use helpers
   function checkClassNames ($target, classList) {
@@ -24,7 +16,7 @@ function init () {
     const $target = $(e.target);
     // console.log($target);
     navEvents($target);
-    imageEvents($target);
+    // imageEvents($target);
   });
 
   // Nav functionality
@@ -41,8 +33,9 @@ function init () {
   }
 
   // Images Functionality
-  function imageEvents ($target) {
-  }
+  // function imageEvents ($target) {
+    // Do nothing for now...
+  // }
 }
 
 module.exports = init;

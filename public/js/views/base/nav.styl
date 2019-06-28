@@ -25,6 +25,7 @@
     text-transform lowercase
     opacity 0.75
     transition opacity 0.15s ease-in-out
+    z-index 1
     &:hover
       opacity 1
     .item-text
@@ -67,14 +68,16 @@
   @media screen and (max-width: $tablet)
     display block
   .mobile-nav-content
-    position absolute
-    right 0
+    position fixed
+    top 0
+    left 0
+    width 100vw
     background #fafafa
-    border-radius 3px
-    border 1px solid #ccc
-    padding 1px 5px
+    padding 30px 30px 20px
+    border-bottom 1px solid #ccc
     opacity 0
     transform translateY(-5px)
+    z-index 0
     pointer-events none
     transition opacity 0.2s ease-in-out, transform 0.2s ease-in-out
   &.mobile-open
@@ -94,6 +97,7 @@
     user-select none
     top 1px
     padding 5px
+    z-index 1
   .hamburger-inner
     position relative
   .hamburger

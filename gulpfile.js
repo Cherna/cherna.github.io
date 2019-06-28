@@ -67,8 +67,6 @@ gulp.task('browserify', function(done) {
   done();
 });
 
-// pug.compileFile('public/js/views/base/layout.pug')
-
 // Static index
 gulp.task('index', function(done) {
   gulp.src('public/js/views/base/layout.pug')

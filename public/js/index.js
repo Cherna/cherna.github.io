@@ -1,19 +1,16 @@
-// Include page manager
+// Global
+const $ = require('jquery');
 const page = require('page');
-
-// Global script
+const wow = require('wowjs');
+const pace = require('pace-js');
 const initScript = require('./utils/init-script');
+const getCurrentSafeTitle = require('./utils/get-title');
 
 // Views
 const notFound = require('./views/base/notfound.pug');
 const year2016 = require('./views/2016');
 const year2017 = require('./views/2017');
 const about = require('./views/about');
-
-// Vendor global scripts
-const pace = require('../vendor/pace.min');
-const wow = require('../vendor/wow.min').WOW;
-const getCurrentSafeTitle = require('./utils/get-title');
 
 // Helpers
 const render = require('./utils/render');
@@ -42,7 +39,6 @@ function closeSidebar () {
 }
 
 $(document).ready(() => {
-
   initScript();
 
   page.base('/#');
