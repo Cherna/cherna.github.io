@@ -1,6 +1,5 @@
 const $ = require('jquery');
 const parseContext = require('./parse-context');
-const createSlider = require('./createSlider');
 
 function render (context, template, options) {
   let ctx = {};
@@ -18,14 +17,7 @@ function render (context, template, options) {
   $mainContent
     .removeClass()
     .addClass('main-content ' + ctx.classText)
-    .html(template(options))
-  
-  const $contentCarousels = $mainContent.find('[data-carousel]');
-  if ($contentCarousels.length) {
-    $contentCarousels.each((i, el) => {
-      createSlider($(el).find('.image-box-inner'));
-    });
-  }
+    .html(template(options));
 
   $('html, body').scrollTop(0);
 }

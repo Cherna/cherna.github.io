@@ -91,8 +91,8 @@ gulp.task('watch', function(done) {
   // Watch .scss files
   gulp.watch(['public/**/*.styl', ], gulp.series('styles'));
 
-  // Watch .js files
-  gulp.watch(['public/js/**/*.js', 'public/**/*.pug', 'views/**/*.pug'], gulp.series('index', 'browserify'));
+  // Watch .js and .pug files
+  gulp.watch(['public/js/**/*.js', 'public/js/**/*.pug'], gulp.series('index', 'browserify'));
 
   // Watch image files
   gulp.watch('public/images/*', gulp.series('images'));
