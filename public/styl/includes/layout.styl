@@ -13,6 +13,12 @@
   flex 1 1 auto
   overflow hidden
   transition opacity 0.3s ease-in-out
+  // Allow space for fixed nav in desktop
+  padding-left 250px
+  @media (max-width: $tablet)
+    // Replace padding for fixed nav
+    padding-left 0
+    padding-top 50px
   &.hide
     opacity 0
     transition none
@@ -21,3 +27,43 @@
   display flex
   flex-direction column
   justify-content center
+.full-screen-image-container
+  position fixed
+  display flex
+  align-items center
+  justify-content center
+  padding 50px
+  z-index 2000
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background rgba(255,255,255,0.9)
+  pointer-events none
+  opacity 0
+  transition opacity 0.2s ease-in-out
+  @media (max-width: $phone)
+    padding 15px
+  &:after
+    content 'Click / Tap again to exit full screen image'
+    position absolute
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0px 25px;
+    bottom 20px
+    left 50%
+    transform translateX(-50%)
+    font-size 12px
+  &.img-open
+    opacity 1
+    pointer-events initial
+  .image-wrapper
+    display flex
+    align-items center
+    justify-content center
+    width 100%
+    height 100%
+  .image-box-img
+    max-width 100%
+    max-height 100%

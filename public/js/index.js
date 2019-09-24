@@ -38,8 +38,28 @@ function closeSidebar () {
   mobileNav.removeClass('mobile-open');
 }
 
+function fullScreenImg () {
+  const $fullScreenImgCont = $('.full-screen-image-container');
+  $('html').on('click', function(e) {
+    if (!$fullScreenImgCont.hasClass('img-open')
+        && e.target
+        && ($(e.target).hasClass('image-wrapper')
+        || $(e.target).hasClass('image-box-img')))
+    {
+      $fullScreenImgCont.empty();
+      $(e.target)
+        .clone()
+        .appendTo($fullScreenImgCont);
+      $fullScreenImgCont.addClass('img-open');
+    } else if ($fullScreenImgCont.hasClass('img-open')) {
+      $fullScreenImgCont.empty().removeClass('img-open');
+    }
+  });
+}
+
 $(document).ready(() => {
   initScript();
+  fullScreenImg();
 
   page.base('/#');
 

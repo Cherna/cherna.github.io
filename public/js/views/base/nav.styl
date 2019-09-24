@@ -1,17 +1,24 @@
 .main-nav
-  position relative
+  position fixed
   display flex
   flex-direction column
   padding 10px 20px 0
   transform translateZ(0)
   z-index 1
   @media screen and (max-width: $tablet)
+    box-shadow 0 0 10px 0 rgba(0,0,0,0.15)
     flex-direction row
     padding 10px 15px 12px
     height auto
     width 100%
     background-color #fafafa
     align-items center
+    .home-link .item-text
+      font-size 28px !important
+    .nav-title
+      font-size 18px !important
+    .item-text
+      font-size 16px !important
   .main-nav-content
     padding-left 5px
     @media screen and (max-width: $tablet)

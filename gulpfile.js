@@ -1,3 +1,6 @@
+// Disable the fucking notifications on some platforms
+process.env.DISABLE_NOTIFIER = true;
+
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
