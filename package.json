@@ -7,7 +7,7 @@
   "dependencies": {
     "babel-preset-es2015": "^6.16.0",
     "browserify": "^16.2.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "pace-js": "^1.0.2",
     "page": "^1.11.4",
     "pug": "^2.0.4",
